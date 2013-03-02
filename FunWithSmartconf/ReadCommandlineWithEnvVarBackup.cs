@@ -5,6 +5,12 @@ using SmartConf.Sources.Environment;
 
 namespace FunWithSmartconf
 {
+    /// <summary>
+    /// This example explores combining the CommandLineParser source
+    /// with the Environment variable source so that any command line
+    /// option that _isn't_ provided is pulled in from the process'
+    /// environment variables.
+    /// </summary>
     class ReadCommandlineWithEnvVarBackup
     {
         public class Options
@@ -16,8 +22,11 @@ namespace FunWithSmartconf
 
         public static void RunExample()
         {
+            // Make sure the env var is set.
             Environment.SetEnvironmentVariable("INPUT_FILE", "default.txt");
 
+            // Create a new configuration manager where the input file
+            // is specified on the command line.
             var withInput = new SmartConf.ConfigurationManager<Options>(
                 new EnvironmentConfigurationSource<Options>
                     {
@@ -32,6 +41,8 @@ namespace FunWithSmartconf
 
             Console.WriteLine();
 
+            // Create a new configuration manager where the input file
+            // is not specified, so it defaults to the environment variable.
             var withEnv = new SmartConf.ConfigurationManager<Options>(
                 new EnvironmentConfigurationSource<Options>
                 {
